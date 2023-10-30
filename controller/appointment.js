@@ -25,19 +25,29 @@ const createAppointment = async (req, res) => {
 
 const getAppointments = async (req, res) => {
     try {
-
         let obj = {};
 
+        const { specialization, order, name } = req.query;
 
-        let { specialization, order, name } = req.query;
+
+        if (specialization) {
+            obj.specialization = specialization;
+        }
 
 
-        let appointments = await Appointment.find(obj);
+        let sortOptions = { date: 1 };
+        if (order === 'desc') {
+            sortOptions.date = -1;
+        }
 
+        if (name) {
+            obj.doctorName = { $regex: new RegExp(name, 'i') };
+        }
+
+        const appointments = await Appointment.find(obj).sort(sortOptions);
 
         res.status(200).send(appointments);
-    }
-    catch (err) {
+    } catch (err) {
         res.status(400).send(err);
     }
 }

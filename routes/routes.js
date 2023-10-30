@@ -10,4 +10,4 @@ router.post("/login", login);
 router.post("/appointments", authMiddleware, createAppointment);
 router.get("/appointments", getAppointments);
 
-module.exports = router;
+module.exports = {router};
