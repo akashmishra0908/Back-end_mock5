@@ -35,7 +35,7 @@ try {
     }
     let passwodConfirmation=await bcrypt.compare(password,alrdyUser.password);
     if(!passwodConfirmation){
-        res.status(202).send("Invalid Password...");
+        res.status(202).send("Invalid Credentials");
         return;
     }
     else {
@@ -49,4 +49,4 @@ try {
 }
 }
 
-module.exports={register}
+module.exports={register,login}
